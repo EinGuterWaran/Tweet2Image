@@ -6,6 +6,7 @@ import fetch_tweets as ft
 import urllib.request
 import requests
 import cv2
+import os, shutil
 
 color_codes = [[251, 57, 88], [255, 200, 56], [109, 201, 147], [69, 142, 255],
                [18, 86, 136]]
@@ -50,6 +51,16 @@ def tweets_to_images(file, handle, name, showFavsRt, show_date):
         tweet_to_image(name, handle, showFavsRt, show_date, tweet,
                        tweet_timestamp, favs, retweets, profile_image,
                        tweet_id, media_url, color[0], color[1], color[2])
+    folder = 'cache/'
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
 def tweet_in_lines(tweet, tweet_lines, tw_font):
