@@ -1,12 +1,15 @@
+import os
+import random
+import shutil
+import urllib.request
+
+import cv2
+import pandas as pd
+import requests
 from PIL import Image, ImageDraw, ImageOps, ImageFont
 from pilmoji import Pilmoji
-import pandas as pd
-import random
+
 import fetch_tweets as ft
-import urllib.request
-import requests
-import cv2
-import os, shutil
 
 color_codes = [[251, 57, 88], [255, 200, 56], [109, 201, 147], [69, 142, 255],
                [18, 86, 136]]
