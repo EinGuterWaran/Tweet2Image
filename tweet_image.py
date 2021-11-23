@@ -88,7 +88,7 @@ def tweet_in_lines(tweet, tweet_lines, tw_font):
             current_line = word
         else:
             current_line += filler + word
-    if (len(current_line) > 0):
+    if len(current_line) > 0:
         tweet_lines.append(current_line)
     return len(tweet_lines)
 
@@ -108,7 +108,7 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
     for word in words:
         if word.startswith("https://t.co"):
             response = requests.get(word)
-            if not "photo" in response.url and not "video" in response.url:
+            if "photo" not in response.url and "video" not in response.url:
                 to_remove.append(word)
                 continue
             to_remove.append(word)
@@ -145,9 +145,12 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
             media_size[1] = int(700 / w_factor)
             media_size[0] = int(how_smaller * media_size[0])
         if media_size[0] > int((500 - amo_lines * 70) / h_factor):
+            amo_lines2 = amo_lines
+            if amo_lines2 > 6:
+                amo_lines2 = 6
             how_smaller = int(
-                (500 - amo_lines * 70) / h_factor) / media_size[0]
-            media_size[0] = int((500 - amo_lines * 70) / h_factor)
+                (500 - amo_lines2 * 70) / h_factor) / media_size[0]
+            media_size[0] = int((500 - amo_lines2 * 70) / h_factor)
             media_size[1] = int(how_smaller * media_size[1])
     width = 1080
     height = 1080
@@ -234,18 +237,18 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
     Pilmoji(img).text((tweet_w + 200, tweet_h - 140),
                       "@" + username, (83, 100, 113),
                       font=username_font)
-    fr_offset = tweet_h + (tweet_size[1] + 15) * (1 + len(tweet_lines))
     if len(tweet_lines) == 0:
         len_tweet_lines = 1
     else:
         len_tweet_lines = len(tweet_lines)
+    fr_offset = tweet_h + (tweet_size[1] + 15) * (1 + len_tweet_lines)
     if medias == 1:
         media = Image.open("cache/1.png", 'r')
         media = media.resize((media_sizes[0][1], media_sizes[0][0]))
         img.paste(media, ((width - media_sizes[0][1]) // 2, tweet_h +
                           (tweet_size[1] + 15) * len_tweet_lines))
         fr_offset = tweet_h + (tweet_size[1] +
-                               15) * (len_tweet_lines) + media_offset_h + 50
+                               15) * len_tweet_lines + media_offset_h + 50
     if medias == 2:
         media_1 = Image.open("cache/1.png", 'r')
         media_2 = Image.open("cache/2.png", 'r')
@@ -332,9 +335,11 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
 
         tweet_timestamp = tweet_timestamp4[0] + ":" + tweet_timestamp4[
             1] + " · " + tweet_timestamp3[0] + ". " + months[
-                int(tweet_timestamp2[1]) - 1] + " " + tweet_timestamp2[0]
+                              int(tweet_timestamp2[1]) - 1] + " " + tweet_timestamp2[0]
         draw.text((tweet_w, fr_offset - 40),
                   tweet_timestamp, (83, 100, 113),
                   font=date_font)
-    img.save("tweet_images/" + str(tweet_id) + ".jpg")
-    print("tweet_images/" + str(tweet_id) + ".jpg saved.")
+    if not os.path.exists('tweet_images/' + username):
+        os.makedirs('tweet_images/' + username)
+    img.save("tweet_images/" + username + "/" + str(tweet_id) + ".jpg")
+    print("tweet_images/" + username + "/" + str(tweet_id) + ".jpg saved.")
