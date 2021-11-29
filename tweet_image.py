@@ -70,7 +70,8 @@ def tweet_in_lines(tweet, tweet_lines, tw_font):
             tweet_lines.append(current_line)
             current_line = ""
             continue
-        if word.startswith("https://t.co"): continue
+        if word.startswith("https://t.co"):
+            continue
         if current_line != "":
             filler = " "
         else:
@@ -250,13 +251,13 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
         media_2 = media_2.resize((media_sizes[1][1], media_sizes[1][0]))
         img.paste(media_1,
                   ((width - media_sizes[0][1] - media_sizes[1][1] - 20) // 2,
-                   tweet_h + (tweet_size[1] + 15) * (len_tweet_lines)))
+                   tweet_h + (tweet_size[1] + 15) * len_tweet_lines))
         img.paste(media_2,
                   ((width - media_sizes[0][1] - media_sizes[1][1]) // 2 +
                    media_sizes[0][1] + 20, tweet_h + (tweet_size[1] + 15) *
-                   (len_tweet_lines)))
+                   len_tweet_lines))
         fr_offset = tweet_h + (tweet_size[1] +
-                               15) * (len_tweet_lines) + media_offset_h + 50
+                               15) * len_tweet_lines + media_offset_h + 50
     if medias == 4 or medias == 3:
         media_1 = Image.open("cache/1.png", 'r')
         media_2 = Image.open("cache/2.png", 'r')
@@ -271,24 +272,24 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
                 media_4,
                 ((width - media_sizes[2][1] - media_sizes[3][1]) // 2 +
                  media_sizes[2][1] + 20, 20 + media_sizes[1][0] + tweet_h +
-                 (tweet_size[1] + 15) * (len_tweet_lines)))
+                 (tweet_size[1] + 15) * len_tweet_lines))
             img.paste(media_3,
                       ((width - media_sizes[2][1] - media_sizes[3][1] - 20) //
                        2, 20 + media_sizes[0][0] + tweet_h +
-                       (tweet_size[1] + 15) * (len_tweet_lines)))
+                       (tweet_size[1] + 15) * len_tweet_lines))
         else:
             img.paste(media_3, ((width - media_sizes[2][1]) // 2,
                                 20 + media_sizes[0][0] + tweet_h +
-                                (tweet_size[1] + 15) * (len_tweet_lines)))
+                                (tweet_size[1] + 15) * len_tweet_lines))
         img.paste(media_1,
                   ((width - media_sizes[0][1] - media_sizes[1][1] - 20) // 2,
-                   tweet_h + (tweet_size[1] + 15) * (len_tweet_lines)))
+                   tweet_h + (tweet_size[1] + 15) * len_tweet_lines))
         img.paste(media_2,
                   ((width - media_sizes[0][1] - media_sizes[1][1]) // 2 +
                    media_sizes[0][1] + 20, tweet_h + (tweet_size[1] + 15) *
-                   (len_tweet_lines)))
+                   len_tweet_lines))
         fr_offset = tweet_h + (tweet_size[1] +
-                               15) * (len_tweet_lines) + media_offset_h + 50
+                               15) * len_tweet_lines + media_offset_h + 50
 
     if showFavsRt:
         rectangle_w = rectangle_w - (tweet_w - 60)
