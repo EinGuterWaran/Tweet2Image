@@ -9,7 +9,7 @@ There are two main functions in tweet_image.py:
 * def tweet_to_image(name, username, showFavsRt, show_date, tweet, tweet_timestamp, favs, retweets, profile_image, tweet_id, media_url, r, g, b)
 
 ### tweets_to_images
-* *file*: File with the tweets. You can generate such a file with this module which I have developed: https://github.com/EinGuterWaran/FetchTweets: 
+* *file*: File with the tweets. You can generate such a file with this module which I have developed: https://github.com/EinGuterWaran/FetchTweets
 * *handle*: The Twitter handle/username of the user
 * *name*: The name of the user (not the Twitter handle) which will be on the image. You can let this empty to retrieve the original name via the Twitter API
 * *showFavsRt*: **True** if you want to show the likes and retweets on the image, **False** if not
