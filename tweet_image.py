@@ -3,6 +3,7 @@ import random
 import shutil
 import urllib.request
 
+
 import cv2
 import pandas as pd
 import requests
@@ -30,11 +31,13 @@ def get_text_dimensions(text_string, font):
     ascent, descent = font.getmetrics()
     text_width = font.getmask(text_string).getbbox()[2]
     text_height = font.getmask(text_string).getbbox()[3] + descent
-    return (text_width, text_height)
+    return text_width, text_height
 
 
 def tweets_to_images(file, handle, name, showFavsRt, show_date):
     # let name empty for original name
+    if not os.path.exists('cache'):
+        os.makedirs('cache')
     tweets = pd.read_csv(file)
     profile_image = ft.get_profile_image(handle)
     if name == "":
@@ -54,16 +57,6 @@ def tweets_to_images(file, handle, name, showFavsRt, show_date):
         tweet_to_image(name, handle, showFavsRt, show_date, tweet,
                        tweet_timestamp, favs, retweets, profile_image,
                        tweet_id, media_url, color[0], color[1], color[2])
-    folder = 'cache/'
-    for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
 def tweet_in_lines(tweet, tweet_lines, tw_font):
@@ -100,7 +93,8 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
     name_font = ImageFont.truetype("fonts/HelveticaNeueBold.ttf", 40)
     username_font = ImageFont.truetype("fonts/HelveticaNeueLight.ttf", 35)
     date_font = ImageFont.truetype("fonts/HelveticaNeueLight.ttf", 30)
-
+    if not os.path.exists('cache'):
+        os.makedirs('cache')
     words = tweet.split(" ")
     to_remove = []
     tweet_lines = []
@@ -343,3 +337,7 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
         os.makedirs('tweet_images/' + username)
     img.save("tweet_images/" + username + "/" + str(tweet_id) + ".jpg")
     print("tweet_images/" + username + "/" + str(tweet_id) + ".jpg saved.")
+    shutil.rmtree('cache')
+
+
+tweets_to_images("tweets_JanuWaran_6701_25_2021-11-23_17-20-54.csv", "JanuWaran", "Janu", True, True)
