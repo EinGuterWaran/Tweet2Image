@@ -338,6 +338,3 @@ def tweet_to_image(name, username, showFavsRt, show_date, tweet,
     img.save("tweet_images/" + username + "/" + str(tweet_id) + ".jpg")
     print("tweet_images/" + username + "/" + str(tweet_id) + ".jpg saved.")
     shutil.rmtree('cache')
-
-
-tweets_to_images("tweets_JanuWaran_6701_25_2021-11-23_17-20-54.csv", "JanuWaran", "Janu", True, True)
