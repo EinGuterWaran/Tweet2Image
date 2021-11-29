@@ -10,7 +10,7 @@ import requests
 from PIL import Image, ImageDraw, ImageOps, ImageFont
 from pilmoji import Pilmoji
 
-import fetch_tweets as ft
+import FetchTweets.fetch_tweets as ft
 
 color_codes = [[251, 57, 88], [255, 200, 56], [109, 201, 147], [69, 142, 255],
                [18, 86, 136]]
